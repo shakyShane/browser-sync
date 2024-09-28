@@ -135,11 +135,14 @@ export function setScrollEffect(
 }
 
 function scrollElement(element, scrollProportionally, event: IncomingPayload) {
-    if (scrollProportionally && element.scrollTo) {
-        return element.scrollTo(
-            0,
-            element.scrollHeight * event.position.proportional
-        ); // % of y axis of scroll to px
+    if (element.scrollTo) {
+        if (scrollProportionally) {
+            element.scrollTo(
+                0,
+                element.scrollHeight * event.position.proportional
+            ); // % of y axis of scroll to px
+        } else {
+            element.scrollTo(0, event.position.raw.y);
+        }
     }
-    return element.scrollTo(0, event.position.raw.y);
 }
