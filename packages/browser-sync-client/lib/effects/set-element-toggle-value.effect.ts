@@ -22,7 +22,9 @@ export function setElementToggleValueEffect(
                     match.checked = event.checked;
                 }
                 if (event.tagName === "SELECT") {
-                    match.value = event.value;
+                    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(match), 'value').set;
+                    nativeInputValueSetter.call(match, event.value);
+                    match.dispatchEvent(new Event('change', { bubbles: true }));
                 }
             }
         })
