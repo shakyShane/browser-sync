@@ -510,7 +510,7 @@ BrowserSync.prototype.setOption = function(name, value, opts) {
 
     opts = opts || {};
 
-    bs.debug("Setting Option: {cyan:%s} - {magenta:%s", name, value.toString());
+    bs.debug("Setting Option: {cyan:%s} - {magenta:%s", name, value?.toString());
 
     bs.options = bs.options.set(name, value);
 
