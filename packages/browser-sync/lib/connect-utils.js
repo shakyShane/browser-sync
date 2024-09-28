@@ -171,7 +171,7 @@ var connectUtils = {
             "'{protocol}' + location.hostname + ':{port}{ns}'";
         var withHost = "'{protocol}' + location.host + '{ns}'";
         var withDomain = "'{domain}{ns}'";
-        var port = options.get("port");
+        var port = socketOpts.port || options.get("port");
 
         // default use-case is server/proxy
         var string = withHost;
