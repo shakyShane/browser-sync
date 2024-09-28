@@ -394,9 +394,11 @@ module.exports = {
     scrollElementMapping: [],
 
     /**
-     * Time, in milliseconds, to wait before
-     * instructing the browser to reload/inject following a
-     * file change event
+     * Time, in milliseconds, to wait before instructing the browser to 
+     * reload/inject following a file change event.  This allows time for
+     * any other processing that may need to occur after the initial event.
+     * Unlike `reloadDebounce` this does not _prevent_ a reload from 
+     * occurring, it just offsets the reload time from the event.
      * @property reloadDelay
      * @type Number
      * @default 0
@@ -404,18 +406,26 @@ module.exports = {
     reloadDelay: 0,
 
     /**
-     * Wait for a specified window of event-silence before
-     * sending any reload events.
+     * Time, in milliseconds, to wait since the most recent change event 
+     * before sending any reload events.  If this value is set too high and
+     * changes occur slowly over a long period of item, this may delay
+     * browser reload for a long time but can minimize the total number of
+     * reloads triggered.
      * @property reloadDebounce
      * @type Number
-     * @default 0
+     * @default 500
      * @since 2.6.0
      */
     reloadDebounce: 500,
 
     /**
-     * Emit only the first event during sequential time windows
-     * of a specified duration.
+     * Time, in milliseconds, to wait after processing a change event before
+     * processing the next one.  If this is set to 0, all events will be
+     * processed as soon as they occur (taking into account the `relayDelay`
+     * and `relayDebounce` values).  If there are many change events around 
+     * the same time, setting this to a non-zero value will cause them to be
+     * processed one at a time with a delay and (potentially) a browser reload
+     * each time.
      * @property reloadThrottle
      * @type Number
      * @default 0
