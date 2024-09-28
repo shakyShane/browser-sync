@@ -1,6 +1,7 @@
 var url = require("url");
 
 module.exports.rewriteLinks = function(userServer) {
+    var proto = userServer.protocol || ""; // example "https:"
     var host = userServer.hostname;
     var string = host;
     var port = userServer.port;
@@ -13,7 +14,8 @@ module.exports.rewriteLinks = function(userServer) {
 
     var reg = new RegExp(
         // a simple, but exact match
-        "https?:\\\\/\\\\/" +
+        proto +
+            "\\\\/\\\\/" +
             string +
             "|" +
             // following ['"] + exact
@@ -21,12 +23,15 @@ module.exports.rewriteLinks = function(userServer) {
             string +
             "|" +
             // exact match with optional trailing slash
-            "https?://" +
+            proto +
+            "//" +
             string +
             "(?!:)(/)?" +
             "|" +
             // following ['"] + exact + possible multiple (imr srcset etc)
-            "('|\")(https?://|/|\\.)?" +
+            "('|\")(" +
+            proto +
+            "//|/|\\.)?" +
             string +
             "(?!:)(/)?(.*?)(?=[ ,'\"\\s])",
         "g"
@@ -91,6 +96,7 @@ module.exports.rewriteLinks = function(userServer) {
              */
             return [
                 captured,
+                proto,
                 pre,
                 proxyUrl,
                 out.path || "",

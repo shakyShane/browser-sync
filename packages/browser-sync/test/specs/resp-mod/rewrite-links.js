@@ -32,29 +32,29 @@ describe("Rewriting Domains", function() {
                 "<link href='http://example.com/css/styles'>example.com</link>"
             );
             var expected =
-                "<link href='//192.168.0.4:3002/css/styles'>example.com</link>";
+                "<link href='http://192.168.0.4:3002/css/styles'>example.com</link>";
             assert.equal(actual, expected);
         });
         it("should use the regex to replace links (2)", function() {
             var actual = testRegex("<a href='http://example.com'></a>");
-            var expected = "<a href='//192.168.0.4:3002'></a>";
+            var expected = "<a href='http://192.168.0.4:3002'></a>";
             assert.equal(actual, expected);
         });
         it("should use the regex to replace links (23)", function() {
             var actual = testRegex("<a href='http://example.com/sub/dir'></a>");
-            var expected = "<a href='//192.168.0.4:3002/sub/dir'></a>";
+            var expected = "<a href='http://192.168.0.4:3002/sub/dir'></a>";
             assert.equal(actual, expected);
         });
         it("should use the regex to replace links (3)", function() {
             var actual = testRegex("<a href='http://example.com/sub/dir'></a>");
-            var expected = "<a href='//192.168.0.4:3002/sub/dir'></a>";
+            var expected = "<a href='http://192.168.0.4:3002/sub/dir'></a>";
             assert.equal(actual, expected);
         });
         it("should use the regex to replace links (4)", function() {
             var actual = testRegex(
                 "<a href='https://example.com/sub/dir'></a>"
             );
-            var expected = "<a href='//192.168.0.4:3002/sub/dir'></a>";
+            var expected = "<a href='https://192.168.0.4:3002/sub/dir'></a>";
             assert.equal(actual, expected);
         });
         it("should use the regex to replace links (5)", function() {
@@ -73,7 +73,7 @@ describe("Rewriting Domains", function() {
                 '<a href="http://example.com" class="active" title="Home">Home</a><a href="http://example.com/information" class="" title="Info">Info</a>'
             );
             var expected =
-                '<a href="//192.168.0.4:3002" class="active" title="Home">Home</a><a href="//192.168.0.4:3002/information" class="" title="Info">Info</a>';
+                '<a href="http://192.168.0.4:3002" class="active" title="Home">Home</a><a href="http://192.168.0.4:3002/information" class="" title="Info">Info</a>';
             assert.equal(actual, expected);
             /*jshint ignore:end*/
         });
@@ -82,7 +82,7 @@ describe("Rewriting Domains", function() {
                 "<a href='http://example.com/sub/dir/example.com/css/styles.css'></a><a href='http://example.com/sub/dir/example.com/css/styles.css'></a>"
             );
             var expected =
-                "<a href='//192.168.0.4:3002/sub/dir/example.com/css/styles.css'></a><a href='//192.168.0.4:3002/sub/dir/example.com/css/styles.css'></a>";
+                "<a href='http://192.168.0.4:3002/sub/dir/example.com/css/styles.css'></a><a href='http://192.168.0.4:3002/sub/dir/example.com/css/styles.css'></a>";
             assert.equal(actual, expected);
         });
     });
@@ -104,33 +104,33 @@ describe("Rewriting Domains", function() {
         });
         it("should use the regex to replace links (1)", function() {
             var actual = testRegex("<a href='http://localhost:8000'></a>");
-            var expected = "<a href='//192.168.0.4:3002'></a>";
+            var expected = "<a href='http://192.168.0.4:3002'></a>";
             assert.equal(actual, expected);
         });
         it("should use the regex to replace links (1)", function() {
             var actual = testRegex("<a href='http://localhost:8000'></a>");
-            var expected = "<a href='//192.168.0.4:3002'></a>";
+            var expected = "<a href='http://192.168.0.4:3002'></a>";
             assert.equal(actual, expected);
         });
         it("should use the regex to replace links (2)", function() {
             var actual = testRegex(
                 "<a href='http://localhost:8000/sub/dir'></a>"
             );
-            var expected = "<a href='//192.168.0.4:3002/sub/dir'></a>";
+            var expected = "<a href='http://192.168.0.4:3002/sub/dir'></a>";
             assert.equal(actual, expected);
         });
         it("should use the regex to replace links (3)", function() {
             var actual = testRegex(
                 "<a href='http://localhost:8000/sub/dir'></a>"
             );
-            var expected = "<a href='//192.168.0.4:3002/sub/dir'></a>";
+            var expected = "<a href='http://192.168.0.4:3002/sub/dir'></a>";
             assert.equal(actual, expected);
         });
         it("should use the regex to replace links (4)", function() {
             var actual = testRegex(
                 "<a href='https://localhost:8000/sub/dir'></a>"
             );
-            var expected = "<a href='//192.168.0.4:3002/sub/dir'></a>";
+            var expected = "<a href='https://192.168.0.4:3002/sub/dir'></a>";
             assert.equal(actual, expected);
         });
         it("should use the regex to replace links (5)", function() {
@@ -148,14 +148,15 @@ describe("Rewriting Domains", function() {
                 "<a href='http://localhost:8000/sub/dir/?search=some#shane'></a>"
             );
             var expected =
-                "<a href='//192.168.0.4:3002/sub/dir/?search=some#shane'></a>";
+                "<a href='http://192.168.0.4:3002/sub/dir/?search=some#shane'></a>";
             assert.equal(actual, expected);
         });
         it("should use the regex to replace links that contain hashes (2)", function() {
             var actual = testRegex(
                 "<a href='http://localhost:8000/sub/dir/#search'></a>"
             );
-            var expected = "<a href='//192.168.0.4:3002/sub/dir/#search'></a>";
+            var expected =
+                "<a href='http://192.168.0.4:3002/sub/dir/#search'></a>";
             assert.equal(actual, expected);
         });
         it("should use the regex to replace links that contain hashes (2)", function() {
@@ -183,7 +184,7 @@ describe("Rewriting Domains", function() {
             var input =
                 '<!--//<a href="http://example.com:1234/foo">Link 1</a>--><a href="http://example.com.gov/foo">Link 1</a>';
             var expected =
-                '<!--//<a href="//192.168.0.4:3002/foo">Link 1</a>--><a href="http://example.com.gov/foo">Link 1</a>';
+                '<!--//<a href="http://192.168.0.4:3002/foo">Link 1</a>--><a href="http://example.com.gov/foo">Link 1</a>';
 
             var rewrite = utils.rewriteLinks(
                 { hostname: "example.com", port: 1234 },
@@ -261,7 +262,7 @@ describe("Rewriting Domains", function() {
         });
         it("should not remove trailing slash", function() {
             var input = '<a href="http://example.com:1234/foo/">Link 1</a>';
-            var expected = '<a href="//' + proxyUrl + '/foo/">Link 1</a>';
+            var expected = '<a href="http://' + proxyUrl + '/foo/">Link 1</a>';
             var rewrite = utils.rewriteLinks(
                 { hostname: "example.com", port: 1234 },
                 proxyUrl
@@ -278,9 +279,9 @@ describe("Rewriting Domains", function() {
             var input =
                 '<a href="https://example.com/calendar/2015/06/24/20471/">https://example.com/calendar/2015/06/24/20471/</a></p></div></li></ol></td><td  class="cal-current-month">';
             var expected =
-                '<a href="//' +
+                '<a href="https://' +
                 proxyUrl +
-                '/calendar/2015/06/24/20471/">//' +
+                '/calendar/2015/06/24/20471/">https://' +
                 proxyUrl +
                 '/calendar/2015/06/24/20471/</a></p></div></li></ol></td><td  class="cal-current-month">';
             var rewrite = utils.rewriteLinks(
@@ -299,7 +300,7 @@ describe("Rewriting Domains", function() {
             var input =
                 '<a href="https://example.com/">https://example.com/</a></p></div></li></ol></td><td  class="cal-current-month">';
             var expected =
-                '<a href="//192.168.0.4:3002/">//192.168.0.4:3002/</a></p></div></li></ol></td><td  class="cal-current-month">';
+                '<a href="https://192.168.0.4:3002/">https://192.168.0.4:3002/</a></p></div></li></ol></td><td  class="cal-current-month">';
             var rewrite = utils.rewriteLinks(
                 { hostname: "example.com" },
                 proxyUrl
@@ -338,8 +339,8 @@ describe("Rewriting Domains", function() {
             `;
             var expected = `
                 <a href="http://localhost:6426">should skip</a>
-                <a href="//${proxyUrl}">should hit</a>
-                <a href="//${proxyUrl}/base.html">should hit (2)</a>
+                <a href="http://${proxyUrl}">should hit</a>
+                <a href="http://${proxyUrl}/base.html">should hit (2)</a>
             `;
             var rewrite = utils.rewriteLinks(
                 { hostname: "localhost" },
@@ -361,8 +362,8 @@ describe("Rewriting Domains", function() {
             `;
             var expected = `
                 <a href="http://localhost:6426">should skip</a>
-                <a href="//${proxyUrl}">should hit</a>
-                <a href="//${proxyUrl}/base.html">should hit (2)</a>
+                <a href="http://${proxyUrl}">should hit</a>
+                <a href="http://${proxyUrl}/base.html">should hit (2)</a>
             `;
             var rewrite = utils.rewriteLinks(
                 { hostname: "localhost", port: "8080" },
