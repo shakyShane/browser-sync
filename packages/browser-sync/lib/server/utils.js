@@ -87,12 +87,15 @@ var serverUtils = {
         return {
             server: (function() {
                 var httpModule = serverUtils.getHttpModule(options);
+                const isUsingHttp2Module = options.get("httpModule") === "http2";
 
-                if (
-                    options.get("scheme") === "https" ||
-                    options.get("httpModule") === "http2"
-                ) {
+                if (options.get("scheme") === "https" || isUsingHttp2Module) {
                     var opts = serverUtils.getHttpsOptions(options);
+                    if (isUsingHttp2Module) {
+                        // Create an HTTP/2 server with HTTPS
+                        return httpModule.createSecureServer(opts.toJS(), app)
+                    }
+                    // Create a regular HTTPS server
                     return httpModule.createServer(opts.toJS(), app);
                 }
 
