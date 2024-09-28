@@ -30,6 +30,7 @@
 		"prettier": "prettier 'lib/**/*' 'examples/*' 'test/specs/**/*.js' --tab-width 4",
 		"prettier:fix": "npm run prettier -- --write",
 		"test": "npm run build && npm run env && npm run unit",
+    "test:watch": "npm run build && npm run env && mocha --recursive test/specs --watch",
 		"unit": "mocha --recursive test/specs --timeout 10000 --bail --exit",
 		"watch": "npm run build && npm run serve:fixtures",
 		"serve:fixtures": "node dist/bin test/fixtures -w --no-open"
