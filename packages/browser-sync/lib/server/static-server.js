@@ -69,7 +69,7 @@ module.exports = function createServer(bs) {
                         id:
                             "Browsersync Server Routes Middleware - " +
                             _routes++,
-                        handle: serveStatic(resolve(root))
+                        handle: serveStatic(resolve(root), serveStaticOptions)
                     };
                 })
             );

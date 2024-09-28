@@ -38,6 +38,40 @@ describe("E2E server test with serve static options", function() {
                 });
         });
     });
+    it("also sets the index of serve-static to routes", function(done) {
+        browserSync.reset();
+
+        var config = {
+            server: {
+                baseDir: "test/fixtures",
+                serveStaticOptions: {
+                    index: "inputs.html"
+                },
+                routes: {
+                    "/subdir": "test/fixtures"
+                }
+            },
+            logLevel: "silent",
+            open: false
+        };
+
+        browserSync.create().init(config, function(err, bs) {
+            request(bs.server)
+                .get("/subdir/")
+                .expect(200)
+                .end(function(err, res) {
+                    assert.deepEqual(
+                        require("fs").readFileSync(
+                            "test/fixtures/inputs.html",
+                            "utf-8"
+                        ),
+                        res.text
+                    );
+                    bs.cleanup();
+                    done();
+                });
+        });
+    });
     it("sets uses the default for serve static index", function(done) {
         browserSync.reset();
 
